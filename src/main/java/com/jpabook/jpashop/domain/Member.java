@@ -1,4 +1,4 @@
-package com.jpabook.jpashop.domain.entity;
+package com.jpabook.jpashop.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -11,7 +11,6 @@ import java.util.List;
 @Getter
 @Setter
 public class Member {
-
     @Id
     @GeneratedValue
     @Column(name = "member_id")
@@ -19,9 +18,9 @@ public class Member {
 
     private String name;
 
-    @Embedded // 내장 타입
+    @Embedded // 내장타입
     private Address address;
 
-    @OneToMany(mappedBy = "member") // -> order 테이블에 있는 member
+    @OneToMany(mappedBy = "member") // 연관관계의 주인이 아닌 거울이면 mappedBy 사용
     private List<Order> orders = new ArrayList<>();
 }

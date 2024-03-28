@@ -1,4 +1,4 @@
-package com.jpabook.jpashop.domain.entity;
+package com.jpabook.jpashop.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -7,14 +7,12 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 @Entity
 @Table(name = "orders")
 @Getter
 @Setter
 public class Order {
-
     @Id
     @GeneratedValue
     @Column(name = "order_id")
@@ -31,8 +29,8 @@ public class Order {
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
-    private LocalDateTime orderDateTime;
+    private LocalDateTime orderDate; // 주문 시간
 
     @Enumerated(EnumType.STRING)
-    private OrderStatus status; // 주문상태 ( ORDER, CANCEL)
+    private OrderStatus status;// 주문 상태
 }
