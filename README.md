@@ -1,6 +1,5 @@
 # JPA
 
-
 ## @Enumerated(EnumType.STRING)
 @Enumerated의; 기본타입은 ORDINAL입니다.
 @Enumerated(EnumType.STRING) 어노테이션은 JPA(Java Persistence API)에서 열거형(enum) 필드를 매핑할 때 사용됩니다. </br>

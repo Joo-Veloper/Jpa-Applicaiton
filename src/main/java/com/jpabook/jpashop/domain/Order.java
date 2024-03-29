@@ -56,7 +56,6 @@ public class Order {
      * public static void main(String[] args) {
      * Member member = new Member();
      * Order order = new Order();
-     * <p>
      * member.getOrders().add(order);
      * order.setMember(member);
      * }
