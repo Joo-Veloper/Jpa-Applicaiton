@@ -34,9 +34,49 @@ Setter 사용 x</br>
 
 
 ## N + 1 문제
-
 Eager로 N + 1 문제 해결 XXX
-
 
 X To Many 는 기본이 Lazy여서 그냥 두어도 됨 하지만 그렇지 않고 기본이 Eager인 것들은 Lazy로 다 
 바꿔야함!
+
+## AllArgsConstructor
+Lombok에서 제공하는 기능이며 클래스의 모든 필드를 파라미터로 받는 생성자를 자동으로 생성해주느 기능입니다.
+이 기능을 사용함으로 일일이 생성자 작성하는 번거로움을 줄일수 있습니다.
+```
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
+public class Person {
+    private String name;
+    private int age;
+    private String address;
+    
+    public static void main(String[] args) {
+        Person person = new Person("John", 30, "123 Main St");
+        System.out.println(person.getName());  // 출력: John
+    }
+}
+```
+
+## RequiredArgsConstructor
+Lombok 에서 제공하는 기능이며 클래스 내에 final로 선언되거나 @NotNull 어노테이션이 붙은 필드에 대해 생성자를 자동으로 생성해주는 어노테이션입니다.
+@RequiredArgsConstructor의 주요 목적은 객체의 필수 필드만을 초기화하는데 필요한 생성자를 최소한의 코드로 제공하는 것입니다. 이는 클래스의 불변성을 유지하면서도 필요한 필드에 대한 초기화를 보장하는
+간결한 방법을 제공합니다.
+
+```import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+public class Book {
+    private final String title;
+    private final String author;
+    @NonNull private Integer publicationYear;
+    private boolean inPrint;
+
+    public static void main(String[] args) {
+        // publicationYear는 @NonNull 어노테이션이 붙어 있으므로 생성자에서 초기화가 필요합니다.
+        Book book = new Book("The Great Gatsby", "F. Scott Fitzgerald", 1925);
+        System.out.println(book.title + ", " + book.author + ", " + book.publicationYear);
+    }
+}
+```
