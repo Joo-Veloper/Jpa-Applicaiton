@@ -80,3 +80,53 @@ public class Book {
     }
 }
 ```
+
+## JUnit4와 JUnit5
+
+##### JUnit4
+```
+@Test(expected = IllegalStateException.class)
+public void 중복_확인_예약() throws Exception {
+    // given
+    Member member1 = new Member();
+    member1.setName("Park");
+
+    Member member2 = new Member();
+    member2.setName("Park");
+
+    // when
+    memberService.join(member1);
+    memberService.join(member2); // 이 줄에서 IllegalStateException이 발생해야 함
+
+    fail("예외가 발생해야 한다");
+}
+```
+이 코드는 JUnit 4 스타일을 따릅니다. @Test 어노테이션의 expected 속성을 사용해 특정 타입의 예외가 테스트 메서드 실행 중에 발생해야 함을 명시합니다.
+예상한 예외가 발생하면 테스트는 성공적으로 통과합니다. fail() 메서드 호출은 실제로는 여기서 필요하지 않습니다. 
+왜냐하면, expected 속성으로 이미 예외 발생을 기대하고 있기 때문에, 예외가 발생하지 않아 fail() 호출에 도달하면 JUnit이 테스트 실패로 간주합니다.
+##### JUnit5
+
+```
+@Test
+public void 중복_확인_예약() throws Exception {
+    // given
+    Member member1 = new Member();
+    member1.setName("Park");
+
+    Member member2 = new Member();
+    member2.setName("Park");
+
+    // when
+    memberService.join(member1);
+    assertThrows(IllegalStateException.class, () -> memberService.join(member2));
+}
+
+```
+이 방식은 JUnit 5에서 제공하는 assertThrows 메서드를 사용합니다. assertThrows는 첫 번째 파라미터로 예상되는 예외 타입을 받고,
+두 번째 파라미터로는 예외를 발생시킬 수 있는 실행 가능 코드(람다 표현식)를 받습니다. 
+예외가 발생하면 테스트가 성공합니다. 만약 예외가 발생하지 않으면 테스트는 실패합니다. 
+이 방식은 특정 작업을 수행할 때 정확히 어떤 예외가 발생하는지를 테스트할 때 유용합니다.
+
+
+두 방식 모두 특정 조건에서 예외가 발생하는지 확인하는 데 사용됩니다. 그러나 assertThrows 방식(JUnit 5)은 예외를 더 세밀하게 처리할 수 있게 해주며, 
+특정 부분의 코드에서만 예외 발생을 확인하고자 할 때 더 적합할 수 있습니다. 반면, JUnit 4의 expected 방식은 메서드 전체에서 단 하나의 예외만을 기대할 때 간단하고 직관적입니다.
