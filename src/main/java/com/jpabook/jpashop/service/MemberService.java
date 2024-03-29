@@ -10,21 +10,20 @@ import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
-//@AllArgsConstructor
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;
 
     // 회원 가입
-    @Transactional
+    @Transactional //변경
     public Long join(Member member) {
-        // 중복 이름 불가능
-        validateDuplicateMember(member);
+        validateDuplicateMember(member); //중복 회원 검증
         memberRepository.save(member);
         return member.getId();
     }
     private void validateDuplicateMember(Member member) {
-        List<Member> findMembers = memberRepository.findByName(member.getName());
+        List<Member> findMembers =
+                memberRepository.findByName(member.getName());
         if (!findMembers.isEmpty()) {
             throw new IllegalStateException("이미 존재하는 회원입니다.");
         }
