@@ -51,14 +51,52 @@ public class Order {
         delivery.setOrder(this);
     }
 
+    // Create Method
+    public static Order createOrder(Member member, Delivery delivery, OrderItem... orderItems) {
+        Order order = new Order();
+        order.setMember(member);
+        order.setDelivery(delivery);
+        for (OrderItem orderItem : orderItems) {
+            order.addOrderItem(orderItem);
+        }
+        order.setStatus(OrderStatus.ORDER);
+        order.setOrderDate(LocalDateTime.now());
+        return order;
+    }
+
+    // Business Logic
     /**
-     * 연관관계 편의 메서드
-     * public static void main(String[] args) {
-     * Member member = new Member();
-     * Order order = new Order();
-     * member.getOrders().add(order);
-     * order.setMember(member);
-     * }
+     * 주문 취소
      */
 
+    public void cancel() {
+        if (delivery.getStatus() == DeliveryStatus.COMP) {
+            throw new IllegalStateException("배송 완료된 상품은 취소가 불가능합니다.");
+        }
+        this.setStatus(OrderStatus.CANCEL);
+        for (OrderItem orderItem : orderItems) {
+            orderItem.cancel();
+        }
+    }
+    // getLogic
+    /**
+     * 전체 주문 가격 조회
+     */
+    public int getTotalPrice(){
+        int totalPrice = 0;
+        for (OrderItem orderItem : orderItems) {
+            totalPrice += orderItem.getTotalPrice();
+        }
+        return totalPrice;
+    }
 }
+
+/**
+ * 연관관계 편의 메서드
+ * public static void main(String[] args) {
+ * Member member = new Member();
+ * Order order = new Order();
+ * member.getOrders().add(order);
+ * order.setMember(member);
+ * }
+ */
