@@ -68,7 +68,11 @@ public class ItemController {
 //        book.setIsbn(form.getIsbn());
 //        itemService.saveItem();
 
-        itemService.updateItem(itemId, form.getName(), form.getPrice(), form.getStockQuantity());
+        itemService.updateItem(
+                itemId,
+                form.getName(),
+                form.getPrice(),
+                form.getStockQuantity());
         return "redirect:/items";
     }
 }
