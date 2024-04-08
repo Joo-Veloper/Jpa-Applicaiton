@@ -33,7 +33,7 @@ public class OrderApiController {
         return all;
     }
 
-    @GetMapping("api/v2/orders")
+    @GetMapping("/api/v2/orders")
     public List<OrderDto> ordersV2() {
         List<Order> orders = orderRepository.findAllByString(new OrderSearch());
         List<OrderDto> result = orders.stream()
@@ -42,6 +42,20 @@ public class OrderApiController {
 
         return result;
     }
+
+    @GetMapping("/api/v3/orders")
+    public List<OrderDto> ordersV3() {
+        List<Order> orders = orderRepository.findAllWithItem();
+
+//        for (Order order : orders) {
+//            System.out.println("Order = " + order + "id = " + order.getId());
+//        }
+        List<OrderDto> result = orders.stream()
+                .map(o -> new OrderDto(o))
+                .collect(Collectors.toList());
+        return result;
+    }
+
     @Getter
     public class OrderDto {
         private Long orderId;

@@ -102,4 +102,16 @@ public class OrderRepository {
         ).getResultList();
     }
 
+    public List<Order> findAllWithItem() {
+        return em.createQuery(
+                        // distinct는 한줄이 완전이 똑같으면 제거 되어서 한개만 출력!
+                        "select distinct o from Order o" +
+                                " join fetch o.member m" +
+                                " join fetch o.delivery d" +
+                                " join fetch o.orderItems oi" +
+                                " join fetch oi.item i", Order.class)
+//                .setFirstResult(1)  1대 다 fetch join에서 fetch join 사용 x 1대 다가 아니면 상관 없음
+//                .setMaxResults(100)
+                .getResultList();
+    }
 }
