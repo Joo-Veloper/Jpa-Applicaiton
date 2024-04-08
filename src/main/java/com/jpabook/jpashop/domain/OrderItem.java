@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import static jakarta.persistence.FetchType.LAZY;
-
+// @BatchSize(size = 1000) // 컬렉션 적용할 때
 @Entity
 @Getter
 @Setter
