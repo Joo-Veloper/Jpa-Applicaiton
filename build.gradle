@@ -38,7 +38,7 @@ dependencies {
     runtimeOnly 'com.h2database:h2'
     // validation
     implementation 'org.springframework.boot:spring-boot-starter-validation'
-    // hivernate5
+    // hibernate5
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5-jakarta'
 
     annotationProcessor 'org.projectlombok:lombok'
